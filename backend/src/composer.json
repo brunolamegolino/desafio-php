@@ -1,5 +1,10 @@
 {
     "require": {
-        "adodb/adodb-php": "^5.22" 
+        "adodb/adodb-php": "^5.22"
+    },
+    "require-dev": {
+        "codeception/codeception": "^5.0",
+        "codeception/module-phpbrowser": "*",
+        "codeception/module-asserts": "*"
     }
 }
