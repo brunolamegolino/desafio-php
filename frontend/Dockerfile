@@ -1,16 +1,12 @@
-FROM node:14-alpine
+FROM node:slim
 
 WORKDIR /app
 
-COPY package.json ./
+COPY ./app/package.json .
 
 RUN npm install
 
-COPY ./frontend .
-
-# RUN npm run build
-
 EXPOSE 3000
 
-# CMD ["npm", "start"]
-CMD ["tail", "-f", "/dev/null"]
+CMD ["npm", "run", "dev"]
+# CMD ["tail", "-f", "/dev/null"]
