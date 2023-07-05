@@ -13,7 +13,7 @@ function App() {
       <AppBar position="static">
         <Container maxWidth="md">
           <div className='flex flex-row justify-between items-center'>           
-            <h2>Products</h2>
+            <Link to='/' children={<h2>Products</h2>} />
             <Link to='/cart' children={
               <Badge badgeContent={(useContext(Context).cart).length} color="error" children={<ShoppingCart />} />
             } />
