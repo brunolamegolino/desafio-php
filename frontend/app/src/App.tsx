@@ -6,6 +6,7 @@ import { ShoppingCart } from '@mui/icons-material';
 import { Link } from 'react-router-dom';
 import Home from './pages/Home';
 import Cart from './pages/Cart';
+import { Product } from './entities';
 
 function App() {
   return (
@@ -15,7 +16,8 @@ function App() {
           <div className='flex flex-row justify-between items-center'>           
             <Link to='/' children={<h2>Products</h2>} />
             <Link to='/cart' children={
-              <Badge badgeContent={(useContext(Context).cart).length} color="error" children={<ShoppingCart />} />
+              <Badge  color="error" children={<ShoppingCart />} badgeContent={(useContext(Context).cart).reduce(
+                (prev: number, curr: Product)=>{return prev+(curr.quantity)}, 0)}/>
             } />
           </div>
         </Container>

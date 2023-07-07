@@ -7,6 +7,7 @@ export type Product = {
     productType: ProductType | null ,
     images_path: string ,
     created_at: string ,
+    quantity: number ,
 }
 
 export type ProductType = {

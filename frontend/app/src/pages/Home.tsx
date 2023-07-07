@@ -1,12 +1,11 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { Button, Card, CardActions, CardContent, CardMedia, Container, Grid } from '@mui/material';
 import { ShoppingCart } from '@mui/icons-material';
-import { Product } from '../entities';
 import { Context } from '../context';
 
 
 export default function Home() {
-    const {cart, setCart} = useContext(Context)
+    const {addToCartHandler} = useContext(Context)
     const [products, setProducts] = useState([])
 
     useEffect(() => {
@@ -14,10 +13,6 @@ export default function Home() {
             setProducts(data)
         });
     }, []);
-
-    const buyingHandler = (product: Product) => {
-        setCart((cart: Product[]) => [...cart, product])
-    }
 
     return (
         <div>
@@ -43,7 +38,7 @@ export default function Home() {
                         </CardContent>
                         <CardActions>
                             <Button size="small">View</Button>
-                            <Button onClick={(e) => buyingHandler(product)} size="small"><ShoppingCart fontSize='small'/> Buy</Button>
+                            <Button onClick={(e) => {addToCartHandler(product)}} size="small"><ShoppingCart fontSize='small'/> Buy</Button>
                         </CardActions>
                         </Card>
                     </Grid>

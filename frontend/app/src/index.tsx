@@ -5,17 +5,20 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { BrowserRouter } from 'react-router-dom';
 import { ContextProvider } from './context';
+import { SnackbarProvider } from 'notistack';
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
 );
 root.render(
   <React.StrictMode>
-    <ContextProvider>
+    <SnackbarProvider maxSnack={3}>
       <BrowserRouter>
-        <App />
+        <ContextProvider>
+            <App />
+            </ContextProvider>
       </BrowserRouter>
-    </ContextProvider>
+    </SnackbarProvider>
   </React.StrictMode>
 );
 

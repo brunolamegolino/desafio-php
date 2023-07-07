@@ -6,13 +6,9 @@ import { Delete } from '@mui/icons-material';
 
 
 export default function Cart() {
-    const {cart, setCart} = useContext(Context)
+    const {cart, confirmPurchase, deleteHandler} = useContext(Context)
 
-    const deleteHandler = (index: number) => {
-        let cartTemp = cart
-        cart.splice(index, 1)
-        setCart([...cartTemp])
-    }
+    const total = cart.reduce((prev: number, curr: Product) => {return prev + (curr.price*curr.quantity)}, 0).toFixed(2)
 
     return (
         <div>
@@ -30,16 +26,17 @@ export default function Cart() {
                                     </div>
                                     <div className='flex flex-col w-full h-full items-center'>
                                         <p>
-                                            <span className='cursor-pointer' onClick={(e)=>deleteHandler(index)}>
+                                            <span className='cursor-pointer' onClick={(e)=>{deleteHandler(product)}}>
                                                 <Delete fontSize='small' color='error' />
                                             </span>
                                             {product['name']}
                                         </p>
                                         <p>R$ {Number(product['price']).toFixed(2)}</p>
-                                        <p>price {Number(
+                                        <p>Price {Number(
                                             product['price']/(1+(product['productType']?.['percentage_tax']??0)/100)
                                             ).toFixed(2)} + tax
                                             {product['productType']?.['percentage_tax']}%</p>
+                                        <p>Quantity {product['quantity']} - R${product['price']*product['quantity']}</p>
                                     </div>
                                 </div>))}
                         </div>
@@ -48,9 +45,8 @@ export default function Cart() {
                         <h2>Checkout</h2>
                         <p>Confirm the values</p>
                         <div className='p-4 border-solid rounded border-2 border-gray-200'>
-                            <p>Full Value R${cart.reduce((prev: number, curr: Product) =>
-                                {return prev + curr.price}, 0).toFixed(2)}</p>
-                        <Button variant="contained" color="success">Buy</Button>
+                            <p>Full Value R${total}</p>
+                        <Button onClick={(e)=>confirmPurchase(total)} disabled={total <= 0} variant="contained" color="success">Buy</Button>
                         </div>
                     </div>
                 </div>
