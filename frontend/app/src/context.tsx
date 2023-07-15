@@ -1,5 +1,5 @@
-import React, { createContext, useEffect, useState } from "react";
-import { Product } from "./entities";
+import { createContext, useEffect, useState } from "react";
+import { Product, ProductType } from "./entities";
 import { VariantType, useSnackbar } from "notistack";
 import { useNavigate } from "react-router-dom";
 
@@ -8,8 +8,13 @@ const Context = createContext({} as any);
 const ContextProvider = ({ children }: any) => {
   const navigate = useNavigate();
   const { enqueueSnackbar } = useSnackbar();
+  const [productTypes, setProductTypes] = useState<ProductType[]>([])
   const [cart, setCart] = useState<Product[] | []>(
     localStorage.getItem("cart") ? JSON.parse(localStorage.getItem("cart") as string) : []);
+
+  useEffect(() => {
+    (async () => {if (productTypes.length === 0) await getProductTypes()})()
+  }, [productTypes]);
 
   useEffect(() => {
     localStorage.setItem("cart", JSON.stringify(cart));
@@ -36,7 +41,7 @@ const ContextProvider = ({ children }: any) => {
       })
 
     const data = await response.json()
-    if (!(data?.id)) throw new Error()
+    if (!data.id) throw new Error()
     notify('Purchase completed successfully', 'success')
     setCart([])
     navigate('/')
@@ -65,12 +70,25 @@ const ContextProvider = ({ children }: any) => {
     setCart([...cart])
   }
 
+  const getProductTypes = async () => {
+    console.log('getProductTypes')
+    try {
+      const response = await fetch('http://localhost:8080/product-type')
+      const data = await response.json()
+      setProductTypes(data as ProductType[])
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
   const contextValue = {
     cart,
     setCart,
     confirmPurchase,
     addToCartHandler,
     deleteHandler,
+    productTypes,
+    notify,
   }
 
     return (

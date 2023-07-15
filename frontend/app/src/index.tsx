@@ -15,8 +15,8 @@ root.render(
     <SnackbarProvider maxSnack={3}>
       <BrowserRouter>
         <ContextProvider>
-            <App />
-            </ContextProvider>
+          <App />
+        </ContextProvider>
       </BrowserRouter>
     </SnackbarProvider>
   </React.StrictMode>

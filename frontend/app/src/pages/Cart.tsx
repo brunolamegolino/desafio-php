@@ -3,6 +3,7 @@ import { Button, Container } from '@mui/material';
 import { Product } from '../entities';
 import { Context } from '../context';
 import { Delete } from '@mui/icons-material';
+import SlideImage from '../components/SlideImage';
 
 
 export default function Cart() {
@@ -11,7 +12,7 @@ export default function Cart() {
     const total = cart.reduce((prev: number, curr: Product) => {return prev + (curr.price*curr.quantity)}, 0).toFixed(2)
 
     return (
-        <div>
+        <div className='flex flex-col pt-10 pb-2 max-h-screen overflow-auto'>
             <Container maxWidth="md">
                 <div className='flex flex-row justify-between space-x-2'>
                     <div className='flex flex-col w-3/5'>
@@ -20,9 +21,8 @@ export default function Cart() {
                         <div className='p-2 border-solid rounded border-2 border-gray-200'>
                             {cart.map((product: Product, index: number) => (
                                 <div key={index} className='flex flex-row justify-between p-2'>
-                                    <div className='w-52 h-28 border-solid border-2 rounded'>
-                                        <img className='w-full h-full object-cover'
-                                            src="https://source.unsplash.com/random?wallpapers" alt="random"/>
+                                    <div className='w-2/5'>
+                                        <SlideImage showIndicators={false} imagesPath={product.images_path}/>
                                     </div>
                                     <div className='flex flex-col w-full h-full items-center'>
                                         <p>
