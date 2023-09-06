@@ -14,7 +14,7 @@ const ContextProvider = ({ children }: any) => {
 
   useEffect(() => {
     (async () => {if (productTypes.length === 0) await getProductTypes()})()
-  }, [productTypes]);
+  }, []);
 
   useEffect(() => {
     localStorage.setItem("cart", JSON.stringify(cart));
